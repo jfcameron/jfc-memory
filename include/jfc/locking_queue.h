@@ -14,24 +14,24 @@ namespace jfc
     /// queue access however is locking: threads will wait when pushing and or popping.
     ///
     /// \todo write/find a lockless solution and deprecate this one.
-    template <typename task_type>
+    template <typename item_type>
     class locking_queue
     {
         std::mutex m_mutex;
         
-        std::queue<task_type> m_queue;
+        std::queue<item_type> m_queue;
         
     public:
-        //! adds a new task to the back of the queue.
-        void push(task_type &&task)
+        //! adds a new item to the back of the queue.
+        void push(item_type &&item)
         {
-            //std::lock_guard<std::mutex> lock(m_mutex);
+            std::lock_guard<std::mutex> lock(m_mutex);
             
-            m_queue.push(std::forward<task_type>(task));
+            m_queue.push(std::forward<item_type>(item));
         }
         
         //! if size > 0, assigns front to out, pops the front and returns true. otherwise returns false.
-        bool pop(task_type &out)
+        bool pop(item_type &out)
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             
@@ -50,3 +50,4 @@ namespace jfc
 }
 
 #endif
+

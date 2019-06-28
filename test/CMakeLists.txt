@@ -18,3 +18,4 @@ jfc_add_tests(
     INCLUDE_DIRECTORIES
         "${${PROJECT_NAME}_INCLUDE_DIRECTORIES}"
 )
+

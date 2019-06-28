@@ -28,14 +28,21 @@ TEMPLATE_LIST_TEST_CASE("default_ptr everything", "[default_ptr]", type::arithme
 {
     using test_type = default_ptr<TestType>;
 
-    SECTION("everything")
+    SECTION("lifetime where target is null")
     {
-        test_type a(create<TestType>(), [](TestType a)
-        {
-            destroy(a);
-        });
+        test_type a(std::make_shared<TestType>(TestType(0)), 
+            std::make_shared<TestType>(TestType(1)));
 
-        REQUIRE(a.get() == 1);
+        REQUIRE(*a.lock() == 0);
+    }
+
+    SECTION("lifetime where target is not null")
+    {
+        auto target = std::make_shared<TestType>(TestType(1));
+
+        test_type a(std::make_shared<TestType>(TestType(0)), target);
+
+        REQUIRE(*a.lock() == 1);
     }
 }
 

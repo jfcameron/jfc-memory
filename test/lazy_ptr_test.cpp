@@ -21,7 +21,11 @@ TEMPLATE_LIST_TEST_CASE("lazy_ptr constructors", "[lazy_ptr]", type::integral)
             return new TestType(1);
         });
 
+        REQUIRE(!ptr.initialized());
+
         REQUIRE(*ptr == 1);
+
+        REQUIRE(ptr.initialized());
     }
 }
 

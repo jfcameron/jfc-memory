@@ -26,7 +26,7 @@ namespace jfc
         using T_const_weakptr        = const typename std::weak_ptr<T>;
         
     private:
-        std::vector<T> m_Vector;
+        std::vector<std::shared_ptr<T>> m_Vector;
         
     public:
         ///\name Iterators
