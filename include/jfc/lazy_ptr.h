@@ -14,7 +14,8 @@ namespace jfc
 {
     /// \brief pointer that delays initialization until the first time it is dereferenced or casted
     /// that is to say, until the first time the resource is used.
-    template<typename value_type> class lazy_ptr final
+    template<typename value_type> 
+    class lazy_ptr final
     {
     public:
         using initializer_type = std::function<value_type *const()>;
@@ -64,7 +65,7 @@ namespace jfc
             
         bool operator==(const lazy_ptr &a) const
         {
-            return m_Initializer == a.m_Initializer;
+            return m_SharedPtr == a.m_SharedPtr;
         }
 
         //! initialize pointee and return copy of internal shared_ptr via explicit cast semantic

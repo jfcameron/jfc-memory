@@ -12,13 +12,15 @@
 //TODO: "ResourceManager" can surely be abstracted more. Could it be a specialization of a map with defualt values for example.
 //TODO: Why is the key type forced to be a string? This doesnt make much sense.
 
-namespace gdk
+namespace jfc
 {
     /// \brief responsible for solely managing the lifetime of some object T.
     ///
     /// \detailed By serving resources via default_ptrs, the manager can safely destroy any T instance
     /// without risking memory reading issues.
-    template<typename T> class resource_manager
+    /// TODO: change into "default_map"?
+    template<typename T> 
+    class resource_manager
     {
     protected:
         std::map<std::string,std::shared_ptr<T>> m_Map;
@@ -61,12 +63,12 @@ namespace gdk
         resource_manager &operator=(const resource_manager &) = delete;
         resource_manager &operator=(resource_manager &&) = delete;
 
-    resource_manager(T &&aDefault)
+        resource_manager(T &&aDefault)
         : m_Map()
             , m_Default(std::make_shared<T>(std::move(aDefault)))
         {}
             
-    resource_manager(const std::shared_ptr<T> &aDefault)
+        resource_manager(const std::shared_ptr<T> &aDefault)
         : m_Map()
             , m_Default(aDefault)
         {}

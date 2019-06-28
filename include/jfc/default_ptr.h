@@ -21,9 +21,9 @@ namespace jfc
         //! Attempt to promote m_Target to a shared_ptr. Returns m_Default if m_Target is null
         std::shared_ptr<value_type> lock() const 
         {
-            if (auto pTarget = m_Target.lock()) return pTarget;
-                
-            return m_Default;
+            auto pTarget = m_Target.lock();
+
+            return pTarget ? pTarget : m_Default;
         }
             
         bool operator==(const default_ptr &a) const
@@ -33,8 +33,8 @@ namespace jfc
             m_Target.lock() == a.m_Target.lock();
         }
 
-        default_ptr &operator= (const default_ptr &a) = default;
-        default_ptr &operator= (default_ptr &&a) = default;
+        default_ptr &operator=(const default_ptr &a) = default;
+        default_ptr &operator=(default_ptr &&a) = default;
 
         /// \param aTarget the pointer to attempt to return when lock is called.
         /// \param aDefault the pointer returned by lock if the target is null

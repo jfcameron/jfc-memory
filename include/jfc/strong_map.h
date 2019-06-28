@@ -13,62 +13,61 @@ namespace jfc
     ///
     /// \detailed insertion can only be done via rvalue reference,
     /// map data can only be accessed via weak_ptr
-    template<typename key_type, typename value_type> 
-    class strong_map final
+    template<typename KeyT, typename ValueT /*Rename this, but warning: key_type and value_type already defined below*/> class strong_map final
     {
     public:
-        using iterator = typename std::map<key_type, std::shared_ptr<value_type>>::iterator;
-        using const_iterator = typename std::map<key_type, std::shared_ptr<value_type>>::const_iterator;
-        using reverse_iterator = typename std::map<key_type, std::shared_ptr<value_type>>::reverse_iterator;
-        using const_reverse_iterator = typename std::map<key_type, std::shared_ptr<value_type>>::const_reverse_iterator;
-        using mapped_type = typename std::map<key_type, std::shared_ptr<value_type>>::mapped_type;
-        using key_type = typename std::map<key_type, std::shared_ptr<value_type>>::key_type;
-        using value_type = typename std::map<key_type, std::shared_ptr<value_type>>::value_type;
-        using size_type = typename std::map<key_type, std::shared_ptr<value_type>>::size_type;
-        using mapped_type_weakptr = typename std::weak_ptr<value_type>;
-        using mapped_type_sharedptr = typename std::shared_ptr<value_type>;
+        using iterator =               typename std::map<KeyT, std::shared_ptr<ValueT>>::iterator;
+        using const_iterator =         typename std::map<KeyT, std::shared_ptr<ValueT>>::const_iterator;
+        using reverse_iterator =       typename std::map<KeyT, std::shared_ptr<ValueT>>::reverse_iterator;
+        using const_reverse_iterator = typename std::map<KeyT, std::shared_ptr<ValueT>>::const_reverse_iterator;
+        using mapped_type =            typename std::map<KeyT, std::shared_ptr<ValueT>>::mapped_type;
+        using key_type =               typename std::map<KeyT, std::shared_ptr<ValueT>>::key_type;
+        using value_type =             typename std::map<KeyT, std::shared_ptr<ValueT>>::value_type;
+        using size_type =              typename std::map<KeyT, std::shared_ptr<ValueT>>::size_type;
+        using mapped_type_weakptr =    typename std::weak_ptr<ValueT>;
+        using mapped_type_sharedptr =  typename std::shared_ptr<ValueT>;
             
     private:
-        std::map<key_type, mapped_type_sharedptr> m_Map;
+        std::map<KeyT, mapped_type_sharedptr> m_Map;
 
     public:
         ///\name Iterators
         ///\{
-        iterator begin() {return m_Map.begin();}
-        const_iterator begin() const {return m_Map.begin();}
-        const_iterator cbegin() const {return m_Map.cbegin();}
-        reverse_iterator rbegin() {return m_Map.rbegin(); }
-        const_reverse_iterator rbegin() const {return m_Map.rbegin();}
+        iterator               begin()         {return m_Map.begin();  }
+        const_iterator         begin()   const {return m_Map.begin();  }
+        const_iterator         cbegin()  const {return m_Map.cbegin(); }
+        reverse_iterator       rbegin()        {return m_Map.rbegin(); }
+        const_reverse_iterator rbegin()  const {return m_Map.rbegin(); }
         const_reverse_iterator crbegin() const {return m_Map.crbegin();}
             
-        iterator end() {return m_Map.end();}
-        const_iterator end() const {return m_Map.end();}
-        const_iterator cend() const {return m_Map.cend();}
-        reverse_iterator rend() {return m_Map.rend();}
-        const_reverse_iterator rend() const {return m_Map.rend();}
+        iterator               end()         {return m_Map.end();  }
+        const_iterator         end()   const {return m_Map.end();  }
+        const_iterator         cend()  const {return m_Map.cend(); }
+        reverse_iterator       rend()        {return m_Map.rend(); }
+        const_reverse_iterator rend()  const {return m_Map.rend(); }
         const_reverse_iterator crend() const {return m_Map.crend();}
         ///\}
 
         ///\name Capacity 
         ///\{
-        bool empty() const {return m_Map.empty();}
-        size_type size() const {return m_Map.size();}
+        bool      empty()    const {return m_Map.empty();   }
+        size_type size()     const {return m_Map.size();    }
         size_type max_size() const {return m_Map.max_size();}
         ///\}
             
         ///\name Element access
         ///\{
         mapped_type_weakptr operator[] (const key_type& k) {return mapped_type_weakptr(m_Map[k]);}
-        mapped_type_weakptr operator[] (key_type&& k) {return mapped_type_weakptr(m_Map[k]);}
+        mapped_type_weakptr operator[] (key_type&& k)      {return mapped_type_weakptr(m_Map[k]);}
             
-        mapped_type_weakptr& at (const key_type& k) {return mapped_type_weakptr(m_Map.at(k));}
+        mapped_type_weakptr&       at (const key_type& k)       {return mapped_type_weakptr(m_Map.at(k));}
         const mapped_type_weakptr& at (const key_type& k) const {return mapped_type_weakptr(m_Map.at(k));}
         ///\}
             
         ///\name Modifiers
         ///\{
-        void insert (const key_type &aKey, value_type &&aValue) {m_Map.insert({aKey,std::make_shared<value_type>(std::move(aValue))});}
-        void erase (const key_type &aKey) {m_Map.erase(aKey);}
+        void insert (const KeyT &aKey, ValueT &&aValue) {m_Map.insert({aKey,std::make_shared<ValueT>(std::move(aValue))});}
+        void erase (const KeyT &aKey) {m_Map.erase(aKey);}
         void swap (strong_map& x) {m_Map.swap(x.m_Map);}
         void clear() {m_Map.clear();}
         ///\}
