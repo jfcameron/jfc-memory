@@ -2,6 +2,12 @@
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
+include("${CMAKE_CURRENT_SOURCE_DIR}/jfc-cmake/jfclib.cmake")
+
+option(JFC_BUILD_APP   "Build the app" ON)
+option(JFC_BUILD_DOCS  "Build documentation" ON)
+option(JFC_BUILD_TESTS "Build unit tests" ON)
+
 jfc_project(library
     NAME "gdkmemory"
     VERSION 0.0
@@ -19,3 +25,14 @@ jfc_project(library
     SOURCE_LIST 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/delete_me.cpp # jfc_project has to be modified to handle TYPE HEADER_ONLY
 )
+
+#add_subdirectory(thirdparty)
+
+if (JFC_BUILD_TESTS)
+    add_subdirectory(test)
+endif()
+
+if (JFC_BUILD_DOCS)
+    add_subdirectory(docs)
+endif()
+

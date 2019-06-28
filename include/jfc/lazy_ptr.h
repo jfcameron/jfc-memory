@@ -1,7 +1,7 @@
-// © 2018 Joseph Cameron - All Rights Reserved
+// © 2019 Joseph Cameron - All Rights Reserved
 
-#ifndef GDK_MEMORY_LAZY_PTR_H
-#define GDK_MEMORY_LAZY_PTR_H
+#ifndef JFC_MEMORY_LAZY_PTR_H
+#define JFC_MEMORY_LAZY_PTR_H
 
 #include <functional>
 #include <iostream>
@@ -10,21 +10,24 @@
 
 //TODO: change language contained from "internal ptr" and type "T" to resource and resource_type
 
-namespace gdk
+namespace jfc
 {
     /// \brief pointer that delays initialization until the first time it is dereferenced or casted
     /// that is to say, until the first time the resource is used.
-    template<typename T> class lazy_ptr final
+    template<typename value_type> class lazy_ptr final
     {
     public:
-        using initializer_type = std::function<T *const()>;
+        using initializer_type = std::function<value_type *const()>;
 
     private:
-        const initializer_type m_Initializer; //!< function wrapper called at first dereference to init T instance pointee
+        //! function wrapper called at first dereference to init T instance pointee
+        const initializer_type m_Initializer; 
 
-        mutable std::once_flag m_IsInitialized; //!< indicates whether or not pointee is initialized 
+        //! indicates whether or not pointee is initialized 
+        mutable std::once_flag m_IsInitialized; 
 
-        mutable std::shared_ptr<T> m_SharedPtr = {}; //!< internal pointer to the T instance
+        //! internal pointer to the T instance. mutable type specifier required to allow late instantiation while behind const type. Maintains logical const regardless.
+        mutable std::shared_ptr<value_type> m_SharedPtr = {}; 
 
         //! Initializes the pointer
         void initialize() const
@@ -40,7 +43,7 @@ namespace gdk
         }
 
         //! dereference the pointer, initializing if this was the first time
-        T *get() const 
+        value_type *get() const 
         {
             initialize();
             
@@ -48,13 +51,13 @@ namespace gdk
         }
 
         //! dereference via standard dereference operator
-        T &operator*() const
+        value_type &operator*() const
         {
             return *get();
         }
 
         //! deref and access member via arrow operator
-        T *operator->() const
+        value_type *operator->() const
         {
             return get();
         }
@@ -65,7 +68,7 @@ namespace gdk
         }
 
         //! initialize pointee and return copy of internal shared_ptr via explicit cast semantic
-        explicit operator std::shared_ptr<T>() const
+        explicit operator std::shared_ptr<value_type>() const
         {
             initialize();
             
@@ -75,7 +78,7 @@ namespace gdk
         lazy_ptr &operator= (const lazy_ptr &a) = default;
         lazy_ptr &operator= (lazy_ptr &&a) = default;
 
-        //! \param aInitializer function used to lazily initialize the T instance 
+        //! \param aInitializer function used to lazily initialize the value_type instance 
         lazy_ptr(const initializer_type aInitializer) 
         : m_Initializer(aInitializer) 
         {}            

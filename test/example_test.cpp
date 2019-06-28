@@ -1,29 +1,22 @@
 // © 2018 Joseph Cameron - All Rights Reserved
-// Created on 2018-04-10.
 
-#include <catch.hpp>
-
-
-//#include <some/thing.h>
 #include <string>
-namespace some 
+#include <vector>
+
+#include <jfc/catch.hpp>
+#include <jfc/types.h>
+
+//using namespace gdk;
+
+TEMPLATE_LIST_TEST_CASE("vector constructors", "[vector]", type::integral)
 {
-    struct thing 
+    using vector_type = std::vector<TestType>;
+
+    SECTION("Default constructor produces a zero vector")
     {
-        std::string GetASecret(){return "This is a secret";}
-    };
-}
-//===
+        vector_type vector;
 
-TEST_CASE( "Some::other::thing test", "[Some::thing]" )
-{
-    some::thing a;
-
-    SECTION("Some::Thing tells a secret")
-    {
-        std::string secret = a.GetASecret();
-
-        REQUIRE( secret == "This is a secret" );
+        REQUIRE(vector.size() == 0);
     }
 }
 

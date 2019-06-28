@@ -1,18 +1,18 @@
-// © 2018 Joseph Cameron - All Rights Reserved
+// © 2019 Joseph Cameron - All Rights Reserved
 
-#ifndef GDK_MEMORY_AUTH_VECTOR_H
-#define GDK_MEMORY_AUTH_VECTOR_H
+#ifndef JFC_MEMORY_STRONG_VECTOR_H
+#define JFC_MEMORY_STRONG_VECTOR_H
 
 #include <iosfwd>
 #include <memory>
 #include <vector>
 
-namespace gdk
+namespace jfc 
 {
     ///\brief Vector that strongly owns its data. Data can only be inserted via rvalue references,
     /// data can only be accessed via weak_ptrs.
     template<typename T>
-    class auth_vector final
+    class strong_vector final
     {
     public:
         using iterator               = typename std::vector<T>::iterator;
@@ -82,16 +82,16 @@ namespace gdk
         
         ///\name Mutating operators
         ///\{
-        auth_vector& operator=(const auth_vector &) = delete;
-        auth_vector& operator=(auth_vector &&) = delete;
+        strong_vector& operator=(const strong_vector &) = delete;
+        strong_vector& operator=(strong_vector &&) = delete;
         ///\}
         
         ///\name Constructors, destructors
         ///\{
-        auth_vector() = default;
-        auth_vector(const auth_vector&) = delete;
-        auth_vector(auth_vector&&) = default;
-        ~auth_vector() = default;
+        strong_vector() = default;
+        strong_vector(const strong_vector&) = delete;
+        strong_vector(strong_vector&&) = default;
+        ~strong_vector() = default;
         ///\}
     };
 }

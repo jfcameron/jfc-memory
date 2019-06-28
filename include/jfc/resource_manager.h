@@ -1,10 +1,9 @@
-// © 2018 Joseph Cameron - All Rights Reserved
+// © 2019 Joseph Cameron - All Rights Reserved
 
-#ifndef GDK_GFX_RESOURCEMANAGER_H
-#define GDK_GFX_RESOURCEMANAGER_H
+#ifndef JFC_GFX_RESOURCEMANAGER_H
+#define JFC_GFX_RESOURCEMANAGER_H
 
-#include <Memory/default_ptr.h>
-#include <Debug/Exception.h>
+#include <jfc/default_ptr.h>
 
 #include <string>
 #include <memory>

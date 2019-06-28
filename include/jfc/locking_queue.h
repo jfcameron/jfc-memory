@@ -1,12 +1,12 @@
-// © 2018 Joseph Cameron - All Rights Reserved
+// © 2019 Joseph Cameron - All Rights Reserved
 
-#ifndef GDK_MEMORY_LOCKING_QUEUE_H
-#define GDK_MEMORY_LOCKING_QUEUE_H
+#ifndef JFC_MEMORY_LOCKING_QUEUE_H
+#define JFC_MEMORY_LOCKING_QUEUE_H
 
 #include <queue>
 #include <mutex>
 
-namespace gdk
+namespace jfc 
 {
     /// \brief Thread friendly [locking] queue.
     ///
@@ -14,24 +14,24 @@ namespace gdk
     /// queue access however is locking: threads will wait when pushing and or popping.
     ///
     /// \todo write/find a lockless solution and deprecate this one.
-    template <typename T>
+    template <typename task_type>
     class locking_queue
     {
         std::mutex m_mutex;
         
-        std::queue<T> m_queue;
+        std::queue<task_type> m_queue;
         
     public:
         //! adds a new task to the back of the queue.
-        void push(T &&task)
+        void push(task_type &&task)
         {
             //std::lock_guard<std::mutex> lock(m_mutex);
             
-            m_queue.push(std::forward<T>(task));
+            m_queue.push(std::forward<task_type>(task));
         }
         
         //! if size > 0, assigns front to out, pops the front and returns true. otherwise returns false.
-        bool pop(T &out)
+        bool pop(task_type &out)
         {
             std::lock_guard<std::mutex> lock(m_mutex);
             
