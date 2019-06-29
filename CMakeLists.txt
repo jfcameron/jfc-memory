@@ -8,6 +8,8 @@ option(JFC_BUILD_APP   "Build the app" ON)
 option(JFC_BUILD_DOCS  "Build documentation" ON)
 option(JFC_BUILD_TESTS "Build unit tests" ON)
 
+#add_subdirectory(thirdparty)
+
 jfc_project(library
     NAME "gdkmemory"
     VERSION 0.0
@@ -26,7 +28,13 @@ jfc_project(library
         ${CMAKE_CURRENT_SOURCE_DIR}/src/delete_me.cpp # jfc_project has to be modified to handle TYPE HEADER_ONLY
 )
 
-#add_subdirectory(thirdparty)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    #[[target_compile_options( #TODO: move to this.
+        PUBLIC
+            -pthread
+    )]]
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+endif()
 
 if (JFC_BUILD_TESTS)
     add_subdirectory(test)
