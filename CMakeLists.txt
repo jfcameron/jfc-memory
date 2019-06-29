@@ -29,10 +29,11 @@ jfc_project(library
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    #[[target_compile_options( #TODO: move to this.
+    #[[target_compile_options( #TODO: use this instead of the CMAKE_CXX_FLAGS assignment
         PUBLIC
             -pthread
     )]]
+
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
 
