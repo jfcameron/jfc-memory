@@ -10,7 +10,7 @@
 
 using namespace jfc;
 
-TEMPLATE_LIST_TEST_CASE("lazy_ptr constructors", "[lazy_ptr]", type::integral)
+TEMPLATE_LIST_TEST_CASE("lazy_ptr constructors", "[lazy_ptr]", type::arithmetic)
 {
     using lazy_type = lazy_ptr<TestType>;
 
