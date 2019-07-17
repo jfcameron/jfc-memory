@@ -1,7 +1,6 @@
 // © 2019 Joseph Cameron - All Rights Reserved
 
 #include <string>
-
 #include <vector>
 
 #include <jfc/catch.hpp>
