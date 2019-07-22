@@ -38,7 +38,7 @@ namespace jfc
 
         /// \param aTarget the pointer to attempt to return when lock is called.
         /// \param aDefault the pointer returned by lock if the target is null
-        default_ptr(const std::shared_ptr<value_type> &aDefault, const std::shared_ptr<value_type> &aTarget = {}) 
+        default_ptr(const std::shared_ptr<value_type> &aDefault, const std::shared_ptr<value_type> &aTarget = {})  //TODO: why is there a default value?
         : m_Target(aTarget)
             , m_Default(aDefault)
         {}
