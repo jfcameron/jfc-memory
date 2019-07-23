@@ -28,7 +28,7 @@ jfc_project(library
         ${CMAKE_CURRENT_SOURCE_DIR}/src/delete_me.cpp # jfc_project has to be modified to handle TYPE HEADER_ONLY
 )
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # Why is this here? If required, add a target based abstraction to jfc_project, CPP_COMPILER_FLAGS
     #[[target_compile_options( #TODO: use this instead of the CMAKE_CXX_FLAGS assignment
         PUBLIC
             -pthread
