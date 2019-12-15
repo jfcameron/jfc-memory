@@ -6,17 +6,17 @@
 #include <jfc/catch.hpp>
 #include <jfc/types.h>
 
-#include <jfc/lazy_ptr.h>
+#include <jfc/shared_proxy_ptr.h>
 
 using namespace jfc;
 
-TEMPLATE_LIST_TEST_CASE("lazy_ptr constructors", "[lazy_ptr]", type::arithmetic)
+TEMPLATE_LIST_TEST_CASE("shared_proxy_ptr constructors", "[shared_proxy_ptr]", type::arithmetic)
 {
-    using lazy_type = lazy_ptr<TestType>;
+    using shared_proxy_type = shared_proxy_ptr<TestType>;
 
     SECTION("standard ctor")
     {
-        lazy_type ptr([]()
+        shared_proxy_type ptr([]()
         {
             return new TestType(1);
         });

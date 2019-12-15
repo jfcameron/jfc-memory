@@ -7,7 +7,7 @@ jfc_add_tests(
     TEST_SOURCE_FILES
         "${CMAKE_CURRENT_LIST_DIR}/default_ptr_test.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/dynamic_pool_test.cpp"
-        "${CMAKE_CURRENT_LIST_DIR}/lazy_ptr_test.cpp"
+        "${CMAKE_CURRENT_LIST_DIR}/shared_proxy_ptr_test.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/static_pool_test.cpp"
     
     INCLUDE_DIRECTORIES

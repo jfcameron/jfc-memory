@@ -11,6 +11,7 @@ namespace jfc
 {    
     /// \brief a weak pointer that returns a default pointer to T if the target pointer has become null.
     /// \todo rename lock to get. If the internal lock fails, you still get a defualt value.. this is the whole point. should be ptr.get()
+    /// TODO replace weak ptr semantics with sharedptr semantics? need to revisit the interface from user perspective.
     template<typename value_type>
     class default_ptr final
     {
