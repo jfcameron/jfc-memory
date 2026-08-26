@@ -44,8 +44,6 @@ namespace jfc {
 
         ///! support equality semantics
         [[nodiscard]] bool operator==(const lazy_ptr &a) const { return m_SharedPtr == a.m_SharedPtr; }
-        ///! support equality semantics
-        [[nodiscard]] bool operator!=(const lazy_ptr &a) const { return !(m_SharedPtr == a.m_SharedPtr); }
 
         //! support move semantics
         lazy_ptr &operator=(lazy_ptr &&a) = default;
