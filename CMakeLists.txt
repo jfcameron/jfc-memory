@@ -2,6 +2,10 @@
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
+project(gdkmemory
+    VERSION 0.0
+    DESCRIPTION "game development kit data structures")
+
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/jfc-cmake/jfclib.cmake")
 
 option(JFC_BUILD_DOCS  "Build documentation" ON)
@@ -30,23 +34,27 @@ else()
     endforeach()
 endif()
 
-jfc_project(library
-    NAME "gdkmemory"
-    VERSION 0.0
-    DESCRIPTION "game development kit data structures"
-    C++_STANDARD 20
-    C_STANDARD 90
-    TYPE STATIC
+add_library(gdkmemory STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/nil.cpp)
 
-    PUBLIC_INCLUDE_DIRECTORIES
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+add_library(gdk::memory ALIAS gdkmemory)
 
-    PRIVATE_INCLUDE_DIRECTORIES
+set_target_properties(gdkmemory PROPERTIES EXPORT_NAME memory)
+
+set_target_properties(gdkmemory PROPERTIES PREFIX "lib")
+
+jfc_generate_cmake_header()
+
+target_include_directories(gdkmemory
+    PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+        "$<INSTALL_INTERFACE:include>"
+    PRIVATE
+        "${PROJECT_BINARY_DIR}/generated_include/"
         ${CMAKE_CURRENT_SOURCE_DIR}/src/include
+    )
 
-    SOURCE_LIST 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/nil.cpp 
-)
+target_compile_features(gdkmemory PUBLIC cxx_std_20)
 
 if (JFC_BUILD_TESTS)
     add_subdirectory(test)
