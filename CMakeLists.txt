@@ -43,7 +43,7 @@ set_target_properties(gdkmemory PROPERTIES EXPORT_NAME memory)
 
 set_target_properties(gdkmemory PROPERTIES PREFIX "lib")
 
-jfc_generate_cmake_header()
+jfc_generate_build_info()
 
 target_include_directories(gdkmemory
     PUBLIC
